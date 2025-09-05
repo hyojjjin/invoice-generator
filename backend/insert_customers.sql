@@ -16,7 +16,8 @@ INSERT INTO customers (customer_name, email, phone, address, payment_completed, 
 ('박혜경', 'parkhyekyung@example.com', '010-2468-1357', '', false, null, '구매자 등록', CURRENT_DATE, CURRENT_DATE),
 ('홍민재', 'hongminjae@example.com', '010-3691-4702', '', false, null, '구매자 등록', CURRENT_DATE, CURRENT_DATE),
 ('이효원', 'leehyowon@example.com', '010-4815-6273', '', false, null, '구매자 등록', CURRENT_DATE, CURRENT_DATE),
-('혠짱', 'hyunjjang@example.com', '010-5926-3704', '', false, null, '구매자 등록', CURRENT_DATE, CURRENT_DATE);
+('혠짱', 'hyunjjang@example.com', '010-5926-3704', '', false, null, '구매자 등록', CURRENT_DATE, CURRENT_DATE),
+('변소윤', 'byeonsoyoon@example.com', '010-6037-8159', '', false, null, '구매자 등록', CURRENT_DATE, CURRENT_DATE);
 
 -- 등록 확인 쿼리
 SELECT id, customer_name, email, phone, payment_completed, created_at 
