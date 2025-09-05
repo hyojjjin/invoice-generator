@@ -44,6 +44,7 @@ body {
   flex-wrap: wrap;
 }
 
+.nav-btn,
 .new-invoice-btn,
 .save-invoice-btn {
   padding: 0.75rem 1.5rem;
@@ -54,6 +55,23 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 120px;
+}
+
+.nav-btn {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.nav-btn:hover {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn.active {
+  background-color: #fff;
+  color: #667eea;
+  border-color: #fff;
 }
 
 .new-invoice-btn {

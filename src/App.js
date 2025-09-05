@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import InvoiceForm from './components/InvoiceForm';
 import InvoicePreview from './components/InvoicePreview';
+import CustomerList from './components/CustomerList';
 import apiService from './services/apiService';
 
 function App() {
+  const [currentView, setCurrentView] = useState('invoice'); // 'invoice' or 'customers'
   const [invoiceData, setInvoiceData] = useState({
     companyInfo: {
       name: '',
@@ -224,33 +226,53 @@ function App() {
             <p>자동으로 인보이스를 생성하고 PDF로 다운로드하세요</p>
           </div>
           <div className="header-buttons">
-            <button onClick={createNewInvoice} className="new-invoice-btn">
-              새 인보이스
+            <button 
+              onClick={() => setCurrentView('invoice')} 
+              className={`nav-btn ${currentView === 'invoice' ? 'active' : ''}`}
+            >
+              인보이스 생성
             </button>
-            <button onClick={saveInvoice} className="save-invoice-btn">
-              인보이스 저장
+            <button 
+              onClick={() => setCurrentView('customers')} 
+              className={`nav-btn ${currentView === 'customers' ? 'active' : ''}`}
+            >
+              구매자 관리
             </button>
+            {currentView === 'invoice' && (
+              <>
+                <button onClick={createNewInvoice} className="new-invoice-btn">
+                  새 인보이스
+                </button>
+                <button onClick={saveInvoice} className="save-invoice-btn">
+                  인보이스 저장
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>
       
-      <div className="main-content">
-        <div className="form-section">
-          <InvoiceForm
-            invoiceData={invoiceData}
-            updateInvoiceData={updateInvoiceData}
-            addItem={addItem}
-            updateItem={updateItem}
-            removeItem={removeItem}
-            updateTaxRate={updateTaxRate}
-            saveInvoice={saveInvoice}
-          />
+      {currentView === 'invoice' ? (
+        <div className="main-content">
+          <div className="form-section">
+            <InvoiceForm
+              invoiceData={invoiceData}
+              updateInvoiceData={updateInvoiceData}
+              addItem={addItem}
+              updateItem={updateItem}
+              removeItem={removeItem}
+              updateTaxRate={updateTaxRate}
+              saveInvoice={saveInvoice}
+            />
+          </div>
+          
+          <div className="preview-section">
+            <InvoicePreview invoiceData={invoiceData} />
+          </div>
         </div>
-        
-        <div className="preview-section">
-          <InvoicePreview invoiceData={invoiceData} />
-        </div>
-      </div>
+      ) : (
+        <CustomerList />
+      )}
     </div>
   );
 }

@@ -126,7 +126,7 @@ public class InvoiceService {
     }
     
     // Entity to DTO 변환
-    private InvoiceDTO convertToDTO(Invoice invoice) {
+    public InvoiceDTO convertToDTO(Invoice invoice) {
         InvoiceDTO dto = new InvoiceDTO();
         dto.setId(invoice.getId());
         dto.setCompanyName(invoice.getCompanyName());
