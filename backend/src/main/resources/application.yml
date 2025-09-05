@@ -49,6 +49,21 @@ spring:
       ddl-auto: update
 
 ---
+# SQLite 프로파일 (파일 기반 무료 DB)
+spring:
+  config:
+    activate:
+      on-profile: sqlite
+  datasource:
+    url: jdbc:sqlite:invoice.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+---
 # PostgreSQL 프로파일 (운영용)
 spring:
   config:
