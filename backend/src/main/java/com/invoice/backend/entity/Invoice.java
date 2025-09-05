@@ -17,7 +17,12 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    // Company Information
+    // 구매자 정보와의 관계 (다대일)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+    
+    // Company Information (발행 회사 정보)
     @Column(name = "company_name")
     @NotBlank(message = "회사명은 필수입니다")
     private String companyName;
@@ -33,20 +38,6 @@ public class Invoice {
     
     @Column(name = "company_website")
     private String companyWebsite;
-    
-    // Client Information
-    @Column(name = "client_name")
-    @NotBlank(message = "고객명은 필수입니다")
-    private String clientName;
-    
-    @Column(name = "client_address")
-    private String clientAddress;
-    
-    @Column(name = "client_phone")
-    private String clientPhone;
-    
-    @Column(name = "client_email")
-    private String clientEmail;
     
     // Invoice Details
     @Column(name = "invoice_number", unique = true)
@@ -80,40 +71,57 @@ public class Invoice {
     @PositiveOrZero(message = "총액은 0 이상이어야 합니다")
     private BigDecimal total;
     
-    // Invoice Items
+    // Invoice Details (인보이스 내역들)
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<InvoiceItem> items = new ArrayList<>();
+    private List<InvoiceDetail> invoiceDetails = new ArrayList<>();
+    
+    // 생성일, 수정일
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+    
+    @Column(name = "updated_at")
+    private LocalDate updatedAt;
     
     // Constructors
-    public Invoice() {}
+    public Invoice() {
+        this.createdAt = LocalDate.now();
+        this.updatedAt = LocalDate.now();
+    }
     
-    public Invoice(String companyName, String clientName, String invoiceNumber, LocalDate invoiceDate) {
+    public Invoice(Customer customer, String companyName, String invoiceNumber, LocalDate invoiceDate) {
+        this();
+        this.customer = customer;
         this.companyName = companyName;
-        this.clientName = clientName;
         this.invoiceNumber = invoiceNumber;
         this.invoiceDate = invoiceDate;
     }
     
+    // JPA 생명주기 콜백
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+    
     // Helper methods
-    public void addItem(InvoiceItem item) {
-        items.add(item);
-        item.setInvoice(this);
+    public void addInvoiceDetail(InvoiceDetail invoiceDetail) {
+        invoiceDetails.add(invoiceDetail);
+        invoiceDetail.setInvoice(this);
         calculateTotals();
     }
     
-    public void removeItem(InvoiceItem item) {
-        items.remove(item);
-        item.setInvoice(null);
+    public void removeInvoiceDetail(InvoiceDetail invoiceDetail) {
+        invoiceDetails.remove(invoiceDetail);
+        invoiceDetail.setInvoice(null);
         calculateTotals();
     }
     
     public void calculateTotals() {
-        this.subtotal = items.stream()
-                .map(InvoiceItem::getTotal)
+        this.subtotal = invoiceDetails.stream()
+                .map(InvoiceDetail::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         
         if (this.taxRate != null) {
-            this.taxAmount = this.subtotal.multiply(this.taxRate).divide(new BigDecimal("100"));
+            this.taxAmount = this.subtotal.multiply(this.taxRate).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP);
         } else {
             this.taxAmount = BigDecimal.ZERO;
         }
@@ -121,9 +129,26 @@ public class Invoice {
         this.total = this.subtotal.add(this.taxAmount);
     }
     
+    // 총 할인 금액 계산
+    public BigDecimal getTotalDiscountAmount() {
+        return invoiceDetails.stream()
+                .map(InvoiceDetail::getDiscountAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    
+    // 총 수익 계산
+    public BigDecimal getTotalProfit() {
+        return invoiceDetails.stream()
+                .map(InvoiceDetail::calculateProfit)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    
+    public Customer getCustomer() { return customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
     
     public String getCompanyName() { return companyName; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
@@ -139,18 +164,6 @@ public class Invoice {
     
     public String getCompanyWebsite() { return companyWebsite; }
     public void setCompanyWebsite(String companyWebsite) { this.companyWebsite = companyWebsite; }
-    
-    public String getClientName() { return clientName; }
-    public void setClientName(String clientName) { this.clientName = clientName; }
-    
-    public String getClientAddress() { return clientAddress; }
-    public void setClientAddress(String clientAddress) { this.clientAddress = clientAddress; }
-    
-    public String getClientPhone() { return clientPhone; }
-    public void setClientPhone(String clientPhone) { this.clientPhone = clientPhone; }
-    
-    public String getClientEmail() { return clientEmail; }
-    public void setClientEmail(String clientEmail) { this.clientEmail = clientEmail; }
     
     public String getInvoiceNumber() { return invoiceNumber; }
     public void setInvoiceNumber(String invoiceNumber) { this.invoiceNumber = invoiceNumber; }
@@ -179,9 +192,15 @@ public class Invoice {
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
     
-    public List<InvoiceItem> getItems() { return items; }
-    public void setItems(List<InvoiceItem> items) { 
-        this.items = items;
+    public List<InvoiceDetail> getInvoiceDetails() { return invoiceDetails; }
+    public void setInvoiceDetails(List<InvoiceDetail> invoiceDetails) { 
+        this.invoiceDetails = invoiceDetails;
         calculateTotals();
     }
+    
+    public LocalDate getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
+    
+    public LocalDate getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDate updatedAt) { this.updatedAt = updatedAt; }
 }
