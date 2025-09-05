@@ -1,0 +1,122 @@
+[
+  {
+    "customerName": "부기",
+    "email": "bugi@example.com",
+    "phone": "010-1234-5678",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "나연주",
+    "email": "nayeonju@example.com", 
+    "phone": "010-2345-6789",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "이수아",
+    "email": "leesuah@example.com",
+    "phone": "010-3456-7890", 
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "윤땅띵똥",
+    "email": "yoontang@example.com",
+    "phone": "010-4567-8901",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "두부",
+    "email": "tofu@example.com",
+    "phone": "010-5678-9012",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "콩아현",
+    "email": "kongahyeon@example.com",
+    "phone": "010-6789-0123",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "최은지",
+    "email": "choieunji@example.com",
+    "phone": "010-7890-1234",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "안진희",
+    "email": "anjinhee@example.com",
+    "phone": "010-8901-2345",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "손가희",
+    "email": "songahee@example.com",
+    "phone": "010-9012-3456",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "이여진",
+    "email": "leeyeojin@example.com",
+    "phone": "010-0123-4567",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록 (이영임과 동일인)"
+  },
+  {
+    "customerName": "이소망",
+    "email": "leesomang@example.com",
+    "phone": "010-1357-2468",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "박혜경",
+    "email": "parkhyekyung@example.com",
+    "phone": "010-2468-1357",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "홍민재",
+    "email": "hongminjae@example.com",
+    "phone": "010-3691-4702",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "이효원",
+    "email": "leehyowon@example.com",
+    "phone": "010-4815-6273",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  },
+  {
+    "customerName": "혠짱",
+    "email": "hyunjjang@example.com",
+    "phone": "010-5926-3704",
+    "address": "",
+    "paymentCompleted": false,
+    "notes": "구매자 등록"
+  }
+]

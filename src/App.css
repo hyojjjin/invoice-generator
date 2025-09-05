@@ -21,8 +21,82 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 2rem;
-  text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-text {
+  text-align: left;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-btn,
+.new-invoice-btn,
+.save-invoice-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.nav-btn {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.nav-btn:hover {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn.active {
+  background-color: #fff;
+  color: #667eea;
+  border-color: #fff;
+}
+
+.new-invoice-btn {
+  background-color: #fff;
+  color: #667eea;
+  border: 2px solid #fff;
+}
+
+.new-invoice-btn:hover {
+  background-color: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+.save-invoice-btn {
+  background-color: #10b981;
+  color: white;
+  border: 2px solid #10b981;
+}
+
+.save-invoice-btn:hover {
+  background-color: #059669;
+  border-color: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .App-header h1 {
@@ -34,6 +108,21 @@ body {
 .App-header p {
   font-size: 1.1rem;
   opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .header-text {
+    text-align: center;
+  }
+  
+  .header-buttons {
+    justify-content: center;
+  }
 }
 
 .main-content {

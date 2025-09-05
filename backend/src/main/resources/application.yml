@@ -1,0 +1,104 @@
+server:
+  port: 8080
+
+spring:
+  # H2 Database (개발용 - 메모리)
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  # JPA 설정
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  
+  # H2 Console 활성화 (개발용)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+---
+# H2 파일 DB 프로파일 (데이터 보존)
+spring:
+  config:
+    activate:
+      on-profile: h2-file
+  datasource:
+    url: jdbc:h2:file:./data/invoice_db;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# CORS 설정
+cors:
+  allowed-origins: http://localhost:3000
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  allow-credentials: true
+
+---
+# MySQL 프로파일 (운영용)
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/invoice_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+
+---
+# SQLite 프로파일 (파일 기반 무료 DB)
+spring:
+  config:
+    activate:
+      on-profile: sqlite
+  datasource:
+    url: jdbc:sqlite:invoice.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+---
+# PostgreSQL 프로파일 (운영용)
+spring:
+  config:
+    activate:
+      on-profile: postgresql
+  datasource:
+    url: jdbc:postgresql://localhost:5432/invoice_db
+    driver-class-name: org.postgresql.Driver
+    username: invoice_user
+    password: password123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update

@@ -1,0 +1,25 @@
+-- 간단한 구매자 정보 등록 SQL
+-- 고객 고유코드 + 고객명만
+
+INSERT INTO customers (customer_code, customer_name, created_at, updated_at) VALUES
+('CUST001', '부기', CURRENT_DATE, CURRENT_DATE),
+('CUST002', '나연주', CURRENT_DATE, CURRENT_DATE),
+('CUST003', '이수아', CURRENT_DATE, CURRENT_DATE),
+('CUST004', '윤땅띵똥', CURRENT_DATE, CURRENT_DATE),
+('CUST005', '두부', CURRENT_DATE, CURRENT_DATE),
+('CUST006', '콩아현', CURRENT_DATE, CURRENT_DATE),
+('CUST007', '최은지', CURRENT_DATE, CURRENT_DATE),
+('CUST008', '안진희', CURRENT_DATE, CURRENT_DATE),
+('CUST009', '손가희', CURRENT_DATE, CURRENT_DATE),
+('CUST010', '이여진', CURRENT_DATE, CURRENT_DATE),
+('CUST011', '이소망', CURRENT_DATE, CURRENT_DATE),
+('CUST012', '박혜경', CURRENT_DATE, CURRENT_DATE),
+('CUST013', '홍민재', CURRENT_DATE, CURRENT_DATE),
+('CUST014', '이효원', CURRENT_DATE, CURRENT_DATE),
+('CUST015', '혠짱', CURRENT_DATE, CURRENT_DATE),
+('CUST016', '변소윤', CURRENT_DATE, CURRENT_DATE);
+
+-- 등록 확인 쿼리
+SELECT id, customer_code, customer_name, created_at 
+FROM customers 
+ORDER BY customer_code;
