@@ -98,6 +98,17 @@ public class CustomerController {
         }
     }
     
+    // 구매자 일괄 생성
+    @PostMapping("/batch")
+    public ResponseEntity<List<CustomerDTO>> createCustomersBatch(@Valid @RequestBody List<CustomerDTO> customerDTOs) {
+        try {
+            List<CustomerDTO> createdCustomers = customerService.createCustomersBatch(customerDTOs);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomers);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
     // 구매자 정보 수정
     @PutMapping("/{id}")
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, 

@@ -99,6 +99,19 @@ public class CustomerService {
         return convertToDTO(savedCustomer);
     }
     
+    // 구매자 일괄 생성
+    public List<CustomerDTO> createCustomersBatch(List<CustomerDTO> customerDTOs) {
+        List<Customer> customers = customerDTOs.stream()
+                .map(this::convertToEntity)
+                .collect(Collectors.toList());
+        
+        List<Customer> savedCustomers = customerRepository.saveAll(customers);
+        
+        return savedCustomers.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    
     // 구매자 수정
     public CustomerDTO updateCustomer(Long id, CustomerDTO customerDTO) {
         Customer existingCustomer = customerRepository.findById(id)
